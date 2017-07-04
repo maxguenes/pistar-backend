@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pistar.jpa.mapper.PistarModelMapper">
+
+    <select id="selectModel" resultType="java.lang.String">
+        SELECT
+            JSON_CONTENT
+        FROM
+            PISTAR_MODEL P
+        WHERE
+            P.HASH = #{hash}
+    </select>
+
+    <select id="selectLastInsertedHash" resultType="java.lang.String">
+        SELECT TOP 1
+            HASH
+        FROM
+            PISTAR_MODEL P
+        WHERE
+            P.REMOTE_ADDR = #{remoteAddr}
+        ORDER BY
+            INSERTED_DATE DESC
+    </select>
+
+    <insert id="insertModel">
+        INSERT
+        INTO
+            PISTAR_MODEL("HASH", "JSON_CONTENT", "REMOTE_ADDR")
+        VALUES
+            (RANDOM_UUID(), #{jsonContent}, #{remoteAddr})
+    </insert>
+</mapper>
