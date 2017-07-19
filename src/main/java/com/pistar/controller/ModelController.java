@@ -1,6 +1,8 @@
 package com.pistar.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pistar.jpa.mapper.PistarModelMapper;
+import com.pistar.jpa.model.PiStarModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
-import java.util.UUID;
+import javax.validation.Valid;
 
 /**
  * Created by maxguenes on 18/06/2017.
@@ -23,6 +25,9 @@ public class ModelController {
     @Autowired
     private PistarModelMapper modelMapper;
 
+    @Autowired
+    ObjectMapper objectMapper;
+
     @RequestMapping(value = "/version", method = RequestMethod.GET, produces = MediaType.TEXT_PLAIN_VALUE)
     public String saveModel(){
         return "1.0.0";
@@ -30,9 +35,13 @@ public class ModelController {
 
     @Transactional
     @RequestMapping(value = "/model/save", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.TEXT_PLAIN_VALUE)
-    public String saveModel(@RequestBody String json, HttpServletRequest request){
-        LOGGER.info(json);
+    public String saveModel(@Valid @RequestBody PiStarModel pistarModel, HttpServletRequest request) throws Exception {
         String remoteAddr = request.getRemoteAddr();
+
+        pistarModel.checkValidModel();
+
+        String json = objectMapper.writeValueAsString(pistarModel);
+
         boolean result = modelMapper.insertModel(json, remoteAddr);
 
         if(!result){

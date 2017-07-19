@@ -1,5 +1,7 @@
 package com.pistar.configuration;
 
+import com.pistar.filter.XSSFilter;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.cors.CorsConfiguration;
@@ -22,6 +24,17 @@ public class PiStarConfiguration {
         config.addAllowedMethod("POST");
         source.registerCorsConfiguration("/**", config);
         return new CorsFilter(source);
+    }
+
+    @Bean
+    public FilterRegistrationBean xssFilterRegistration() {
+
+        FilterRegistrationBean registration = new FilterRegistrationBean();
+        registration.setFilter(new XSSFilter());
+        registration.addUrlPatterns("/*");
+        registration.setName("XSSFilter");
+        registration.setOrder(1);
+        return registration;
     }
 
 }
