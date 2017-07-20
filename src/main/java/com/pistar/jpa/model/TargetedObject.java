@@ -16,9 +16,8 @@ public abstract class TargetedObject extends IdentifiedObject {
     public String target;
 
     @Override
-    public void checkValidModel() {
-        super.checkValidModel();
-
+    public void checkValidObject() {
+        super.checkValidObject();
         Assert.notNull(source, "Empty source Value");
         Assert.notNull(target, "Empty target Value");
     }

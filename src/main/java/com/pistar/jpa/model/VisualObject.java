@@ -19,8 +19,8 @@ public abstract class VisualObject extends IdentifiedObject {
     public String text;
 
     @Override
-    public void checkValidModel() {
-        super.checkValidModel();
+    public void checkValidObject() {
+        super.checkValidObject();
         Assert.notNull(x, "Empty X value");
         Assert.notNull(y, "Empty Y value");
         Assert.notNull(text, "Empty text value");
