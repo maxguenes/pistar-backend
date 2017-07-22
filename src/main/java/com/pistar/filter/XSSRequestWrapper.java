@@ -1,15 +1,15 @@
 package com.pistar.filter;
 
-import org.springframework.web.util.HtmlUtils;
+import com.pistar.utils.XSSUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
+import java.util.regex.Pattern;
 
 /**
  * Created by maxguenes on 19/07/2017.
  */
 public class XSSRequestWrapper extends HttpServletRequestWrapper {
-
 
     public XSSRequestWrapper(HttpServletRequest servletRequest) {
         super(servletRequest);
@@ -23,7 +23,7 @@ public class XSSRequestWrapper extends HttpServletRequestWrapper {
         int count = values.length;
         String[] encodedValues = new String[count];
         for (int i = 0; i < count; i++) {
-            encodedValues[i] = HtmlUtils.htmlEscape(values[i]);
+            encodedValues[i] = XSSUtils.stripXSS(values[i]);
         }
         return encodedValues;
     }
@@ -33,14 +33,16 @@ public class XSSRequestWrapper extends HttpServletRequestWrapper {
         if (value == null) {
             return null;
         }
-        return HtmlUtils.htmlEscape(value);
+        return XSSUtils.stripXSS(value);
     }
 
     public String getHeader(String name) {
         String value = super.getHeader(name);
         if (value == null)
             return null;
-        return HtmlUtils.htmlEscape(value);
+        return XSSUtils.stripXSS(value);
     }
+
+
 
 }
