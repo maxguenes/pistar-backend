@@ -12,5 +12,5 @@ public interface PistarModelMapper {
     boolean insertModel(@Param("jsonContent") String jsonContent, @Param("remoteAddr") String remoteAddr);
     boolean insertModel(@Param("hash") String hash, @Param("jsonContent") String jsonContent, @Param("remoteAddr") String remoteAddr);
 
-    String selectLastInsertedHash(@Param("remoteAddr") String remoteAddr);
+    boolean existsModel(@Param("hash") String hash);
 }

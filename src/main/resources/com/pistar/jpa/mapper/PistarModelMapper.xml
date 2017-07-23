@@ -11,15 +11,13 @@
             P.HASH = #{hash}
     </select>
 
-    <select id="selectLastInsertedHash" resultType="java.lang.String">
-        SELECT TOP 1
-            HASH
+    <select id="existsModel" resultType="java.lang.Boolean">
+        SELECT
+            COUNT (*) > 0
         FROM
             PISTAR_MODEL P
         WHERE
-            P.REMOTE_ADDR = #{remoteAddr}
-        ORDER BY
-            INSERTED_DATE DESC
+            P.HASH = #{hash}
     </select>
 
     <insert id="insertModel">
