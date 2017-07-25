@@ -49,14 +49,13 @@ public class PistarModelServiceImpl implements PistarModelService {
         return hash;
     }
 
-    private static String getUniqueHash(String content) throws IOException {
-        ObjectMapper mapper = new ObjectMapper();
+    private String getUniqueHash(String content) throws IOException {
 
-        ObjectNode node = (ObjectNode)mapper.readTree(content);
+        ObjectNode node = (ObjectNode)objectMapper.readTree(content);
 
         node.remove("saveDate");
 
-        String resultJson = mapper.writeValueAsString(node);
+        String resultJson = objectMapper.writeValueAsString(node);
 
         String result = UUID.nameUUIDFromBytes(resultJson.getBytes()).toString();
         return result;
