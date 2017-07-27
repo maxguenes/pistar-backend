@@ -3,6 +3,7 @@ package com.pistar.configuration;
 import com.zaxxer.hikari.HikariDataSource;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.annotation.MapperScan;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
@@ -18,19 +19,22 @@ import javax.sql.DataSource;
 public class DatabaseConfig {
 
 
+    @Value("${spring.datasource.url}")
+    private String url;
+    @Value("${spring.datasource.username}")
+    private String username;
+    @Value("${spring.datasource.password}")
+    private String password;
+    @Value("${spring.datasource.driver}")
+    private String driver;
+
     @Bean
-    @Primary
     public DataSource dataSource() {
         HikariDataSource ds = new HikariDataSource();
-
-        ds.setDriverClassName("org.h2.Driver");
-        ds.setJdbcUrl("jdbc:h2:file:./data/pistar");
-        ds.setUsername("sa");
-        ds.setPassword("");
-        ds.addDataSourceProperty("cachePrepStmts", "true");
-        ds.addDataSourceProperty("prepStmtCacheSize", "300");
-        ds.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");
-
+        ds.setDriverClassName(driver);
+        ds.setJdbcUrl(url);
+        ds.setUsername(username);
+        ds.setPassword(password);
         return ds;
     }
 
