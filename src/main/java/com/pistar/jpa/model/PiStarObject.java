@@ -36,8 +36,8 @@ public class PiStarObject implements PiStarValidObject {
 
         checkValidDiagram();
         checkValidActors(validNodes);
-        checkValidLinks(validNodes);
         checkValidDependencies(validNodes);
+        checkValidLinks(validNodes);
     }
 
     private void checkValidDiagram() {
@@ -63,6 +63,9 @@ public class PiStarObject implements PiStarValidObject {
 
         for (PiStarDependency dependency : dependencies){
             dependency.checkValidObject();
+
+            validNodes.put(dependency.id, dependency);
+
             Assert.isTrue(validNodes.containsKey(dependency.source), "Dependency Source "+dependency.source+" do not exist");
             Assert.isTrue(validNodes.containsKey(dependency.target), "Dependency Target "+dependency.target+"do not exist");
         }

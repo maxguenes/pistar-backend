@@ -25,6 +25,6 @@
         INTO
             PISTAR_MODEL("HASH", "JSON_CONTENT", "REMOTE_ADDR")
         VALUES
-            (RANDOM_UUID(), #{jsonContent}, #{remoteAddr})
+            (#{hash}, #{jsonContent}, #{remoteAddr})
     </insert>
 </mapper>

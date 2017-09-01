@@ -32,6 +32,7 @@ public class PistarModelServiceImpl implements PistarModelService {
 
     @Override
     public String saveModel(PiStarObject piStarModel, String remoteAddr) throws Exception{
+
         piStarModel.checkValidObject();
 
         String json = objectMapper.writeValueAsString(piStarModel);
