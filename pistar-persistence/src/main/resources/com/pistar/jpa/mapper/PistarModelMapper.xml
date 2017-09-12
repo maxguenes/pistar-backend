@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pistar.jpa.mapper.PistarModelMapper">
+
+    <select id="selectModel" resultType="java.lang.String">
+        SELECT
+            JSON_CONTENT
+        FROM
+            PISTAR_MODEL P
+        WHERE
+            P.HASH = #{hash}
+    </select>
+
+    <select id="existsModel" resultType="java.lang.Boolean">
+        SELECT
+            COUNT (*) > 0
+        FROM
+            PISTAR_MODEL P
+        WHERE
+            P.HASH = #{hash}
+    </select>
+
+    <insert id="insertModel">
+        INSERT
+        INTO
+            PISTAR_MODEL("HASH", "JSON_CONTENT", "REMOTE_ADDR")
+        VALUES
+            (#{hash}, #{jsonContent}, #{remoteAddr})
+    </insert>
+</mapper>
